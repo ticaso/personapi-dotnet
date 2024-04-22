@@ -1,0 +1,73 @@
+-- Creación de la tabla 'persona'
+CREATE TABLE persona (
+  cc INT PRIMARY KEY,
+  nombre VARCHAR(45),
+  apellido VARCHAR(45),
+  genero CHAR(1) CHECK (genero IN ('M', 'F')),
+  edad INT
+);
+
+-- Creación de la tabla 'profesion'
+CREATE TABLE profesion (
+  id INT PRIMARY KEY,
+  nom VARCHAR(90),
+  des TEXT
+);
+
+-- Creación de la tabla 'estudios'
+CREATE TABLE estudios (
+  id_prof INT,
+  cc_per INT,
+  fecha DATE,
+  univer VARCHAR(50),
+  PRIMARY KEY (id_prof, cc_per),
+  FOREIGN KEY (cc_per) REFERENCES persona(cc),
+  FOREIGN KEY (id_prof) REFERENCES profesion(id)
+);
+
+-- Creación de la tabla 'telefono'
+CREATE TABLE telefono (
+  num VARCHAR(15) PRIMARY KEY,
+  oper VARCHAR(45),
+  duenio INT,
+  FOREIGN KEY (duenio) REFERENCES persona(cc)
+);
+
+
+
+
+
+
+
+USE persona_db;
+INSERT INTO dbo.persona (cc, nombre, apellido, genero, edad) VALUES
+(123456789, 'Juan', 'Pérez', 'M', 30),
+(987654321, 'Ana', 'Gomez', 'F', 25),
+(456789123, 'Luis', 'Martinez', 'M', 40),
+(789123456, 'Laura', 'Jimenez', 'F', 28),
+(321654987, 'Carlos', 'Hernandez', 'M', 35);     
+
+
+INSERT INTO dbo.profesion (id, nom, des) VALUES
+(1, 'Ingeniería de Sistemas', 'Persona que se dedica al análisis, diseño, implementación y mantenimiento de sistemas.'),
+(2, 'Medicina', 'Profesional de la salud encargado del diagnóstico y tratamiento de enfermedades.'),
+(3, 'Derecho', 'Profesional especializado en leyes y normativas.'),
+(4, 'Arquitectura', 'Profesional que se encarga del diseño y construcción de edificios.'),
+(5, 'Contaduría', 'Profesional que se encarga de las finanzas y la contabilidad de una organización.');
+
+
+INSERT INTO dbo.telefono (num, oper, duenio) VALUES
+('(555) 123-4567', 'Movistar', 123456789),
+('(555) 234-5678', 'Tigo', 987654321),
+('(555) 345-6789', 'Claro', 456789123),
+('(555) 456-7890', 'ETB', 789123456),
+('(555) 567-8901', 'Avantel', 321654987);
+
+
+
+INSERT INTO dbo.estudios (id_prof, cc_per, fecha, univer) VALUES
+(1, 123456789, '2010-05-15', 'Universidad Nacional'),
+(2, 987654321, '2012-08-20', 'Universidad de Los Andes'),
+(3, 456789123, '2014-02-11', 'Universidad Javeriana'),
+(4, 789123456, '2016-09-05', 'Universidad del Rosario'),
+(5, 321654987, '2018-03-18', 'Universidad Externado de Colombia');
